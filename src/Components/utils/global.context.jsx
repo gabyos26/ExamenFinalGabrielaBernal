@@ -1,57 +1,90 @@
-import { createContext, useReducer } from "react";
-import React, {useState, useEffect } from "react";
 
-export const initialState = {theme: "", data: []}
+import React, {createContext, useReducer, useEffect, useState } from "react";
+
 
 export const ContextGlobal = createContext();
 
-
-const getDentistaFromStorage = () => {
-  const localData = localStorage.getItem("dentistas");
+export const getDentistaFromStorage = () => {
+  const localData = localStorage.getItem("favs");
   return localData ? JSON.parse(localData) : [];
 };
 
-const saveDentistasFromStorage = (dentistas) => {
-  localStorage.setItem("dentistas", JSON.stringify(dentistas));
+
+export const saveDentistasFromStorage = (odontologo) => {
+  const storageFavs = getDentistaFromStorage();
+  const isFavOnList = storageFavs.filter(fav => {
+      return fav.id === odontologo.id
+  });
+  if (isFavOnList.length === 0) {
+      storageFavs.push(odontologo)
+      localStorage.setItem("favs", JSON.stringify(storageFavs));
+      alert("Dentista agregado a Favoritos!");
+      return true;
+  }
+  else {
+      alert("Dentista ya existe en favoritos!");
+      return false;
+  }
 };
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "add_dentista": 
-    saveDentistasFromStorage ([...state, action.payload]);
-    return [...state, action.payload];
 
 
-    default: 
-    return state;
-  }
-}
-
-
-
-
-export const GlobalContextProvider = ({ children }) => {
-  const [dentistas, setDentistas] = useState ([]);
-  const [state, dispatch] = useReducer (reducer, {}, getDentistaFromStorage)
-
-  const getDestinta = async () => {
-      try {
-        fetch ('https://jsonplaceholder.typicode.com/users')
-        .then((res) => res.json())
-        .then((data) => setDentistas(data));
-      } catch (error) {
-        console.error(error)
+const reducerFun = (state, action) => {
+   switch(action.type){
+    case "oscuro":
+      return{
+        bgFlag: "claro",
+        navbgColor: "#1f1f20",
+        bgColor:"#393944",
+        ftColor: "#eee",
+        data: state.data
       }
-  
-  }
 
-  useEffect(() => {
-   getDestinta ();
-  }, []);
+      case "claro":
+        return{
+          bgFlag: "oscuro",
+          ftColor: "#393944",
+          navbgColor: "#d6d6d6",
+          bgColor: "#eee", 
+          data: state.data
+        }
+        case "data":
+        return { ...state, data: action.payload}
+    default:
+      return state; 
+   }
+  };
+
+  export const GlobalContextProvider = ({ children }) => {
+    const [dentistas, setDentistas] = useState ([]);
+    const initalState = { bgFlag: "oscuro",navbgColor: "#d6d6d6", ftColor: "#393944", bgColor: "#eee", data: []}
+    const [state, dispatch] = useReducer (reducerFun, initalState)
+  
+    const getDestinta = async () => {
+        try {
+          fetch ('https://jsonplaceholder.typicode.com/users')
+          .then((res) => res.json())
+          .then((data) => setDentistas(data));
+        } catch (error) {
+          console.error(error)
+        }
+    
+    }
+  
+    useEffect(() => {
+     getDestinta ();
+    }, []);
+  
+
+  
+
+
 
   return (
     <ContextGlobal.Provider value={{dentistas, state, dispatch}}> 
-      {children}
+    <div style={{ backgroundColor: `${state.bgColor}`, width: "100%", height: "200vh", minHeight: "100%", color: `${state.ftColor}` }}>
+    {children}
+    </div>     
     </ContextGlobal.Provider>
   );
 };

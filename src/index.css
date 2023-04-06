@@ -61,13 +61,21 @@ li:nth-child(4) {
 
 .nav-link {
   display: inline-block;
-  background-color: #303030;
   border: none;
   padding: 0.5rem;
   text-align: center;
   text-decoration: none;
   border-radius: 20%;
   font-size: 13px;
+}
+
+.light-theme {
+  background-color: #F5F5F5;
+}
+
+.dark-theme {
+  background-color: #303030;
+  color: #FFFFFF;
 }
 
 
@@ -101,14 +109,10 @@ form{
 }
 
 .card{
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  width: 250px;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
   border: 0.5px solid rgb(136, 136, 136);
   border-radius: 0.5rem;
-  text-align: center;
+  
 }
 
 .card:hover{
