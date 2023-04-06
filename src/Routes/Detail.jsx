@@ -1,18 +1,50 @@
-import React from 'react'
+import React, {useContext, useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
+import { ContextGlobal } from '../Components/utils/global.context';
 
 
 //Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
 
 const Detail = () => {
+ const [dentista, setDentista] = useState ([]);
+ const {dentistas} = useContext(ContextGlobal);
+ const params = useParams ();
+
+ const getDestinta = () => {
+  let buscar = dentistas.filter(dentista => dentista.id === parseInt(params.id));
+  setDentista(buscar[0]);
+  return buscar;
+ }
+
+ useEffect(() => {
+ getDestinta()
+ }, [params]);
  
-  // Consumiendo el parametro dinamico de la URL deberan hacer un fetch a un user en especifico
 
   return (
-    <>
-      <h1>Detail Dentist id </h1>
-      {/* aqui deberan renderizar la informacion en detalle de un user en especifico */}
-      {/* Deberan mostrar el name - email - phone - website por cada user en especifico */}
-    </>
+    <div>
+    {dentista && 
+      <div>
+        <h1>Detalle del dentista {dentista.id}</h1>
+        <table>
+         <thead>
+           <tr>
+             <th>Nombre</th>
+             <th>Email</th>
+             <th>Telefono</th>
+             <th>Website</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td>{dentista.name}</td>
+          <td>{dentista.email}</td>
+          <td>{dentista.phone}</td>
+          <td>{dentista.website}</td>
+        </tbody>
+        </table>
+      </div>
+    }
+    </div>
   )
 }
 
