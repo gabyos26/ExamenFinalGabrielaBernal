@@ -9,14 +9,14 @@ const Form = () => {
   const [error, setError] = useState (false);
    
 
-//const validarMail = (email) => {
-  //let validarMail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.w{2,10})+$/;
- // return validarMail.test(email)
-//}
+const validarMail = (email) => {
+  let validarMail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)+$/;
+ return validarMail.test(email)
+}
 
   function subidaDeDatos (x) {
     x.preventDefault();
-    if (nombre.length >= 5) {
+    if (nombre.length >= 5 && validarMail(email)) {
        setMostrar (true)
        setError (false)
     } else {

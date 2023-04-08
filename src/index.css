@@ -20,24 +20,27 @@ code {
   margin: 0 auto ;
 }
 
+.button:hover {
+  background-color: rgb(108, 111, 111);
+}
+
 h1{
   text-align: center;
 }
 
 nav{
-  background-color: #e8dfdf;
   justify-content: flex-start;
   padding: 1.5rem;
 }
 
 a{
-  color: #000;
+  color: #686767;
   text-decoration: none;
   margin: 5px;
   cursor: pointer;
 }
 a:hover{
-  color: rgb(136, 136, 136);
+  color: #888888;
 } 
 
 
@@ -67,15 +70,6 @@ li:nth-child(4) {
   text-decoration: none;
   border-radius: 20%;
   font-size: 13px;
-}
-
-.light-theme {
-  background-color: #F5F5F5;
-}
-
-.dark-theme {
-  background-color: #303030;
-  color: #FFFFFF;
 }
 
 
@@ -158,13 +152,6 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-.dark{
-  background-color: #12121296;
-  color: white;
-}
-.dark > a {
-  color: white;
-}
 
 .texto {
   text-align: center;
@@ -181,7 +168,6 @@ tr:nth-child(even) {
   flex-direction: column;
   max-width: 400px;
   font-family: inherit;
-  color: black;
   margin: 0.5rem;
 }
 

@@ -27,8 +27,6 @@ export const saveDentistasFromStorage = (odontologo) => {
   }
 };
 
-
-
 const reducerFun = (state, action) => {
    switch(action.type){
     case "oscuro":
@@ -45,7 +43,7 @@ const reducerFun = (state, action) => {
           bgFlag: "oscuro",
           ftColor: "#393944",
           navbgColor: "#d6d6d6",
-          bgColor: "#eee", 
+          bgColor: "#fbfafa", 
           data: state.data
         }
         case "data":
